@@ -5,7 +5,6 @@
  */
 package examen2p2_diegomolina_12141157;
 
-import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -47,15 +46,21 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     Thread hilo = new Thread(this);
     Random rd = new Random();
     boolean pausa = false;
+    boolean vive = true;
     @Override
     public void run(){
         int cont = 0;
-        while(true){
+        while(vive==true){
             System.out.print("");
             while(!pausa){
                 try{
                     pb_distancia.setValue(cont);
                     cont++;
+                    if(cont == pb_distancia.getMaximum()){
+                        vive=false;
+                        pb_distancia.setValue(0);
+                        JOptionPane.showMessageDialog(null, "Han Colisionado");
+                    }
                     Thread.sleep(5);
                 }catch(Exception ex){
                     System.out.println(ex);
@@ -265,27 +270,41 @@ public class Principal extends javax.swing.JFrame implements Runnable {
 
     private void bt_collisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_collisionarActionPerformed
         // TODO add your handling code here:
+        Cientifico c = (Cientifico)cb_cientificos.getSelectedItem();
         double x = Math.pow((p2.getX()-p1.getX()), 2);
         double y = Math.pow((p2.getY()-p1.getY()), 2);
         double distancia = Math.sqrt(x+y);
         System.out.println(distancia);
         pb_distancia.setMaximum((int)distancia);
-        hilo = new Thread(this);
-        pb_distancia.setMaximum((int)distancia);
+        pb_distancia.setValue(0);
+        pb_distancia.setForeground(null);
+        new Thread(this).start();
         
-        hilo.start();
-        if(p1 instanceof Terrestre){
-           if(p1.probabilidad() >= 0 && p1.probabilidad() <= 25 ){
-               System.out.println(p1.probabilidad());
-               JOptionPane.showMessageDialog(null, "Jejeje Siuuuuuu");
-           } 
-        }
-        else if(p1 instanceof Gaseoso){
-            if(p1.probabilidad() >= 0 && p1.probabilidad() <= 20){
-                System.out.println(p1.probabilidad());
-                JOptionPane.showMessageDialog(null, "Encara Messiiiii");
+        if(vive==false){
+            if(p1 instanceof Terrestre){
+                int num = p1.probabilidad();
+               if(num >= 0 && num <= 25 ){
+                   System.out.println(p1.probabilidad());
+                   String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
+                   
+                   
+               }
+               else{
+                   
+               }
             }
-        }
+            else if(p1 instanceof Gaseoso){
+                int num = p1.probabilidad();
+                if(num >= 0 && num <= 20){
+                    System.out.println(num);
+                    JOptionPane.showMessageDialog(null, "Encara Messiiiii");
+                }
+                else{
+                    
+                }
+            }
+        }   
+        
     }//GEN-LAST:event_bt_collisionarActionPerformed
     public void actualizarCB(){
         DefaultComboBoxModel dc = (DefaultComboBoxModel) cb_cientificos.getModel();
