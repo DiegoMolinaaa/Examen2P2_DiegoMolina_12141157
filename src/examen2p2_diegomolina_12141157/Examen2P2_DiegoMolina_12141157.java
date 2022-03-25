@@ -16,6 +16,8 @@ public class Examen2P2_DiegoMolina_12141157 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Principal p = new Principal();
+        p.setVisible(true);
     }
     
 }
