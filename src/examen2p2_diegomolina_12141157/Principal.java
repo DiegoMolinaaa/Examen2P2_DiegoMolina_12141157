@@ -50,6 +50,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     boolean vive = true;
     @Override
     public void run(){
+        pb_distancia.setValue(0);
         while(vive==true){
             if(!pausa){
                 pb_distancia.setValue(pb_distancia.getValue()+1);
@@ -287,7 +288,8 @@ public class Principal extends javax.swing.JFrame implements Runnable {
             pb_distancia.setForeground(Color.green);
             pb_distancia.setMaximum((int)distancia);
             pb_distancia.setValue(0);
-            new Thread(this).start();
+            hilo = new Thread(this);
+            hilo.start();
         }
         else{
             JOptionPane.showMessageDialog(null, "Favor Seleccionar Dos Planetas Diferentes");
@@ -297,39 +299,49 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                 int num = p1.probabilidad();
                 if(num >= 0 && num <= 25 ){
                    String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
-                   if(!(nombre.equals(""))){
-                        int tamano = (p1.getTamano()+p2.getTamano())/2;
-                        int peso = (p1.getPeso()+p2.getPeso())/2;
-                        int posx = (p1.getX()+p2.getX())/2;
-                        int posy = (p1.getY()+p2.getY())/2;
-                        for (Cientifico cientifico : cientificos) {
-                            if(cientifico==c){
-                                cientifico.getpDescubiertos().add(new Terrestre(nombre, tamano, peso, posx, posy));
-                            }
-                        }
-                        guardarCientifico();
-                   } 
+                   try{
+                        if(!(nombre.equals(""))){
+                             int tamano = (p1.getTamano()+p2.getTamano())/2;
+                             int peso = (p1.getPeso()+p2.getPeso())/2;
+                             int posx = (p1.getX()+p2.getX())/2;
+                             int posy = (p1.getY()+p2.getY())/2;
+                             for (Cientifico cientifico : cientificos) {
+                                 if(cientifico==c){
+                                     cientifico.getpDescubiertos().add(new Terrestre(nombre, tamano, peso, posx, posy));
+                                 }
+                             }
+                             guardarCientifico();
+                             actualizarArbolP();
+                        } 
+                   } catch (Exception e){
+                       
+                   }    
                }
             }
             else if(p1 instanceof Gaseoso){
                 int num = p1.probabilidad();
                 if(num >= 0 && num <= 20){
                    String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
-                   if(!(nombre.equals(""))){
-                        int tamano = (p1.getTamano()+p2.getTamano())/2;
-                        int peso = (p1.getPeso()+p2.getPeso())/2;
-                        int posx = (p1.getX()+p2.getX())/2;
-                        int posy = (p1.getY()+p2.getY())/2;
-                        for (Cientifico cientifico : cientificos) {
-                            if(cientifico==c){
-                                cientifico.getpDescubiertos().add(new Gaseoso(nombre, tamano, peso, posx, posy));
-                            }
-                        }
-                        guardarCientifico();
+                   try{
+                        if(!(nombre.equals(""))){
+                             int tamano = (p1.getTamano()+p2.getTamano())/2;
+                             int peso = (p1.getPeso()+p2.getPeso())/2;
+                             int posx = (p1.getX()+p2.getX())/2;
+                             int posy = (p1.getY()+p2.getY())/2;
+                             for (Cientifico cientifico : cientificos) {
+                                 if(cientifico==c){
+                                     cientifico.getpDescubiertos().add(new Gaseoso(nombre, tamano, peso, posx, posy));
+                                 }
+                             }
+                             guardarCientifico();
+                             actualizarArbolP();
+                        } 
+                   } catch (Exception e){
+                       
                    }    
                 }
             }
-            actualizarArbolP();
+            
         }   
         
     }//GEN-LAST:event_bt_collisionarActionPerformed
