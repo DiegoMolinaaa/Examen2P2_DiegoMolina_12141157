@@ -5,6 +5,7 @@
  */
 package examen2p2_diegomolina_12141157;
 
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -49,22 +50,19 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     boolean vive = true;
     @Override
     public void run(){
-        int cont = 0;
         while(vive==true){
-            System.out.print("");
-            while(!pausa){
-                try{
-                    pb_distancia.setValue(cont);
-                    cont++;
-                    if(cont == pb_distancia.getMaximum()){
-                        vive=false;
-                        pb_distancia.setValue(0);
-                        JOptionPane.showMessageDialog(null, "Han Colisionado");
-                    }
-                    Thread.sleep(5);
-                }catch(Exception ex){
-                    System.out.println(ex);
+            if(!pausa){
+                pb_distancia.setValue(pb_distancia.getValue()+1);
+                if(pb_distancia.getValue() == pb_distancia.getMaximum()){
+                    JOptionPane.showMessageDialog(null, "Han Colisionado");
+                    vive=false;
+                    pb_distancia.setValue(0);
                 }
+            }    
+            try{
+                Thread.sleep(5);
+            }catch(Exception ex){
+                System.out.println(ex);
             }
         }
     }
@@ -130,11 +128,6 @@ public class Principal extends javax.swing.JFrame implements Runnable {
 
         jLabel1.setText("Cientificos");
 
-        cb_cientificos.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cb_cientificosItemStateChanged(evt);
-            }
-        });
         cb_cientificos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_cientificosActionPerformed(evt);
@@ -228,18 +221,21 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     private void bt_crearCientificoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_crearCientificoActionPerformed
         // TODO add your handling code here:
         String nombre = tf_nomCientifico.getText();
-        cientificos.add(new Cientifico(nombre));
-        JOptionPane.showMessageDialog(null, "Cientifico Creado Exitosamente");
-        tf_nomCientifico.setText("");
-        actualizarCB();
-        guardarCientifico();
-        
+        try{
+            if(!(nombre.equals(""))){
+                cientificos.add(new Cientifico(nombre));
+                JOptionPane.showMessageDialog(null, "Cientifico Creado Exitosamente");
+                tf_nomCientifico.setText("");
+                actualizarCB();
+                guardarCientifico();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Favor Ingrese un Nombre");
+            }
+        } catch (Exception e){
+            
+        }
     }//GEN-LAST:event_bt_crearCientificoActionPerformed
-
-    private void cb_cientificosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_cientificosItemStateChanged
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_cb_cientificosItemStateChanged
 
     private void checkb_publicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkb_publicosActionPerformed
         // TODO add your handling code here:
@@ -260,16 +256,25 @@ public class Principal extends javax.swing.JFrame implements Runnable {
 
     private void mi_planeta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_planeta1ActionPerformed
         // TODO add your handling code here:
-        DefaultMutableTreeNode p1Hoja = (DefaultMutableTreeNode)jt_planetas.getLastSelectedPathComponent();
-        p1 = (Planeta)p1Hoja.getUserObject();
-        tf_nomP1.setText(p1.getNombre());
+        try{
+            DefaultMutableTreeNode p1Hoja = (DefaultMutableTreeNode)jt_planetas.getLastSelectedPathComponent();
+            p1 = (Planeta)p1Hoja.getUserObject();
+            tf_nomP1.setText(p1.getNombre());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Favor Seleccione un Planeta");
+        }
     }//GEN-LAST:event_mi_planeta1ActionPerformed
 
     private void mi_planeta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_planeta2ActionPerformed
         // TODO add your handling code here:
-        DefaultMutableTreeNode p2Hoja = (DefaultMutableTreeNode)jt_planetas.getLastSelectedPathComponent();
-        p2 = (Planeta)p2Hoja.getUserObject();
-        tf_nomP2.setText(p2.getNombre());
+        try{
+            DefaultMutableTreeNode p2Hoja = (DefaultMutableTreeNode)jt_planetas.getLastSelectedPathComponent();
+            p2 = (Planeta)p2Hoja.getUserObject();
+            tf_nomP2.setText(p2.getNombre());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Favor Seleccione un Planeta");
+        }
+        
     }//GEN-LAST:event_mi_planeta2ActionPerformed
 
     private void bt_collisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_collisionarActionPerformed
@@ -278,48 +283,53 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         double x = Math.pow((p2.getX()-p1.getX()), 2);
         double y = Math.pow((p2.getY()-p1.getY()), 2);
         double distancia = Math.sqrt(x+y);
-        System.out.println(distancia);
-        pb_distancia.setMaximum((int)distancia);
-        pb_distancia.setValue(0);
-        pb_distancia.setForeground(null);
-        new Thread(this).start();
-        
+        if(distancia>0){
+            pb_distancia.setForeground(Color.green);
+            pb_distancia.setMaximum((int)distancia);
+            pb_distancia.setValue(0);
+            new Thread(this).start();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Favor Seleccionar Dos Planetas Diferentes");
+        }
         if(vive==false){
             if(p1 instanceof Terrestre){
                 int num = p1.probabilidad();
-               if(num >= 0 && num <= 25 ){
-                   System.out.println(p1.probabilidad());
+                if(num >= 0 && num <= 25 ){
                    String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
-                   int tamano = (p1.getTamano()+p2.getTamano())/2;
-                   System.out.println(tamano);
-                   int peso = (p1.getPeso()+p2.getPeso())/2;
-                   System.out.println(peso);
-                   int posx = (p1.getX()+p2.getX())/2;
-                   System.out.println(posx);
-                   int posy = (p1.getY()+p2.getY())/2;
-                   System.out.println(posy);
-                   for (Cientifico cientifico : cientificos) {
-                       if(cientifico==c){
-                           cientifico.getpDescubiertos().add(new Terrestre(nombre, tamano, peso, posx, posy));
-                       }
-                   }
-                   guardarCientifico();
-                   
-               }
-               else{
-                   
+                   if(!(nombre.equals(""))){
+                        int tamano = (p1.getTamano()+p2.getTamano())/2;
+                        int peso = (p1.getPeso()+p2.getPeso())/2;
+                        int posx = (p1.getX()+p2.getX())/2;
+                        int posy = (p1.getY()+p2.getY())/2;
+                        for (Cientifico cientifico : cientificos) {
+                            if(cientifico==c){
+                                cientifico.getpDescubiertos().add(new Terrestre(nombre, tamano, peso, posx, posy));
+                            }
+                        }
+                        guardarCientifico();
+                   } 
                }
             }
             else if(p1 instanceof Gaseoso){
                 int num = p1.probabilidad();
                 if(num >= 0 && num <= 20){
-                    System.out.println(num);
-                    JOptionPane.showMessageDialog(null, "Encara Messiiiii");
-                }
-                else{
-                    
+                   String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
+                   if(!(nombre.equals(""))){
+                        int tamano = (p1.getTamano()+p2.getTamano())/2;
+                        int peso = (p1.getPeso()+p2.getPeso())/2;
+                        int posx = (p1.getX()+p2.getX())/2;
+                        int posy = (p1.getY()+p2.getY())/2;
+                        for (Cientifico cientifico : cientificos) {
+                            if(cientifico==c){
+                                cientifico.getpDescubiertos().add(new Gaseoso(nombre, tamano, peso, posx, posy));
+                            }
+                        }
+                        guardarCientifico();
+                   }    
                 }
             }
+            actualizarArbolP();
         }   
         
     }//GEN-LAST:event_bt_collisionarActionPerformed
@@ -327,6 +337,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     private void cb_cientificosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_cientificosActionPerformed
         // TODO add your handling code here:
         actualizarArbolP();
+        checkb_publicos.setSelected(false);
         
     }//GEN-LAST:event_cb_cientificosActionPerformed
     public void actualizarCB(){
@@ -385,7 +396,6 @@ public class Principal extends javax.swing.JFrame implements Runnable {
             while( (c = (Cientifico)os.readObject()) != null )
                 cientificos.add(c);
         }catch(Exception ex){
-            System.out.println(ex);
         }
     }
     /**
