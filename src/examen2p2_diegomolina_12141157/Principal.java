@@ -187,6 +187,9 @@ public class Principal extends javax.swing.JFrame {
         if(checkb_publicos.isSelected()){
             actualizarArbolPublicos();
         }
+        else{
+            actualizarArbolDefault();
+        }
     }//GEN-LAST:event_checkb_publicosActionPerformed
     public void actualizarCB(){
         DefaultComboBoxModel dc = (DefaultComboBoxModel) cb_cientificos.getModel();
@@ -196,7 +199,7 @@ public class Principal extends javax.swing.JFrame {
             cb_cientificos.setModel(dc);
         }
     }
-    private void actualizarArbolP(){
+    public void actualizarArbolP(){
         Cientifico c = (Cientifico)cb_cientificos.getSelectedItem();
         DefaultTreeModel modelo = (DefaultTreeModel)jt_planetas.getModel();
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
@@ -207,7 +210,12 @@ public class Principal extends javax.swing.JFrame {
         modelo.setRoot(root);
        
     }
-    private void actualizarArbolPublicos(){
+    public void actualizarArbolDefault(){
+        DefaultTreeModel modelo = (DefaultTreeModel)jt_planetas.getModel();
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
+        modelo.setRoot(root);
+    }
+    public void actualizarArbolPublicos(){
         DefaultTreeModel modelo = (DefaultTreeModel)jt_planetas.getModel();
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
         for (Planeta p : publicos){

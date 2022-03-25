@@ -6,12 +6,12 @@
 package examen2p2_diegomolina_12141157;
 
 import java.util.ArrayList;
-
+import java.io.Serializable;
 /**
  *
  * @author diego
  */
-public class Cientifico {
+public class Cientifico implements Serializable {
     private String nombre;
     private ArrayList<Planeta> pDescubiertos = new ArrayList();
 
