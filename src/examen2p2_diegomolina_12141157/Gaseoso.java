@@ -5,12 +5,14 @@
  */
 package examen2p2_diegomolina_12141157;
 
+import java.util.Random;
+
 /**
  *
  * @author diego
  */
 public class Gaseoso extends Planeta{
-
+    Random r = new Random();
     public Gaseoso() {
     }
 
@@ -21,6 +23,12 @@ public class Gaseoso extends Planeta{
     @Override
     public String toString() {
         return super.getNombre();
+    }
+
+    @Override
+    public int probalidiad() {
+        int num = 0+r.nextInt(100);
+        return num;
     }
     
 }

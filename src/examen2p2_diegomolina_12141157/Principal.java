@@ -5,11 +5,13 @@
  */
 package examen2p2_diegomolina_12141157;
 
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,7 +21,7 @@ import javax.swing.tree.DefaultTreeModel;
  *
  * @author diego
  */
-public class Principal extends javax.swing.JFrame {
+public class Principal extends javax.swing.JFrame implements Runnable {
 
     /**
      * Creates new form Prinicipal
@@ -42,6 +44,25 @@ public class Principal extends javax.swing.JFrame {
         publicos.add(new Gaseoso("Neptuno",200000, 20000, 840, 900));
         
     }
+    Thread hilo = new Thread(this);
+    Random rd = new Random();
+    boolean pausa = false;
+    @Override
+    public void run(){
+        int cont = 0;
+        while(true){
+            System.out.print("");
+            while(!pausa){
+                try{
+                    pb_distancia.setValue(cont);
+                    cont++;
+                    Thread.sleep(5);
+                }catch(Exception ex){
+                    System.out.println(ex);
+                }
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,7 +76,7 @@ public class Principal extends javax.swing.JFrame {
         mi_planeta1 = new javax.swing.JMenuItem();
         mi_planeta2 = new javax.swing.JMenuItem();
         jProgressBar1 = new javax.swing.JProgressBar();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        pb_distancia = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_planetas = new javax.swing.JTree();
         checkb_publicos = new javax.swing.JCheckBox();
@@ -111,6 +132,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         bt_collisionar.setText("Collisionar");
+        bt_collisionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_collisionarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nombre");
 
@@ -130,7 +156,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pb_distancia, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,7 +185,7 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pb_distancia, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -236,6 +262,19 @@ public class Principal extends javax.swing.JFrame {
         p2 = (Planeta)p2Hoja.getUserObject();
         tf_nomP2.setText(p2.getNombre());
     }//GEN-LAST:event_mi_planeta2ActionPerformed
+
+    private void bt_collisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_collisionarActionPerformed
+        // TODO add your handling code here:
+        double x = Math.pow((p2.getX()-p1.getX()), 2);
+        double y = Math.pow((p2.getY()-p1.getY()), 2);
+        double distancia = Math.sqrt(x+y);
+        System.out.println(distancia);
+        pb_distancia.setMaximum((int)distancia);
+        hilo = new Thread(this);
+        pb_distancia.setMaximum((int)distancia);
+        
+        hilo.start();
+    }//GEN-LAST:event_bt_collisionarActionPerformed
     public void actualizarCB(){
         DefaultComboBoxModel dc = (DefaultComboBoxModel) cb_cientificos.getModel();
         dc.removeAllElements();
@@ -333,11 +372,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jt_planetas;
     private javax.swing.JMenuItem mi_planeta1;
     private javax.swing.JMenuItem mi_planeta2;
+    private javax.swing.JProgressBar pb_distancia;
     private javax.swing.JPopupMenu popup_addP;
     private javax.swing.JTextField tf_nomCientifico;
     private javax.swing.JTextField tf_nomP1;

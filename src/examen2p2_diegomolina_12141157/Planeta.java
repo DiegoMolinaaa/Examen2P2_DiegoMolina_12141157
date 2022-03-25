@@ -9,7 +9,7 @@ package examen2p2_diegomolina_12141157;
  *
  * @author diego
  */
-public class Planeta {
+public abstract class Planeta {
     private String nombre;
     private int tamano;
     private int peso;
@@ -71,5 +71,5 @@ public class Planeta {
     public String toString() {
         return nombre;
     }
-    
+    public abstract int probalidiad();
 }
