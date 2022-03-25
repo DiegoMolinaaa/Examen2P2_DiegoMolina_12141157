@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package examen2p2_diegomolina_12141157;
-
+import java.io.Serializable;
 /**
  *
  * @author diego
  */
-public abstract class Planeta {
+public abstract class Planeta implements Serializable{
     private String nombre;
     private int tamano;
     private int peso;

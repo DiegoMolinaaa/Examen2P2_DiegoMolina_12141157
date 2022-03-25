@@ -5,11 +5,12 @@
  */
 package examen2p2_diegomolina_12141157;
 import java.util.Random;
+import java.io.Serializable;
 /**
  *
  * @author diego
  */
-public class Terrestre extends Planeta {
+public class Terrestre extends Planeta implements Serializable{
     Random r = new Random();
     public Terrestre() {
     }

@@ -6,12 +6,12 @@
 package examen2p2_diegomolina_12141157;
 
 import java.util.Random;
-
+import java.io.Serializable;
 /**
  *
  * @author diego
  */
-public class Gaseoso extends Planeta{
+public class Gaseoso extends Planeta implements Serializable{
     Random r = new Random();
     public Gaseoso() {
     }

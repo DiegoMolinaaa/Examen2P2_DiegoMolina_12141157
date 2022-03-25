@@ -135,6 +135,11 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                 cb_cientificosItemStateChanged(evt);
             }
         });
+        cb_cientificos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_cientificosActionPerformed(evt);
+            }
+        });
 
         bt_collisionar.setText("Collisionar");
         bt_collisionar.addActionListener(new java.awt.event.ActionListener() {
@@ -173,12 +178,11 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(bt_crearCientifico, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(tf_nomCientifico)
-                                                .addComponent(tf_nomP1, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(tf_nomP2, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cb_cientificos, javax.swing.GroupLayout.Alignment.LEADING, 0, 155, Short.MAX_VALUE)))
+                                            .addComponent(tf_nomCientifico, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(tf_nomP1)
+                                            .addComponent(tf_nomP2)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cb_cientificos, 0, 155, Short.MAX_VALUE))
                                         .addGap(26, 26, 26)
                                         .addComponent(bt_collisionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
@@ -234,7 +238,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
 
     private void cb_cientificosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_cientificosItemStateChanged
         // TODO add your handling code here:
-        actualizarArbolP();
+        
     }//GEN-LAST:event_cb_cientificosItemStateChanged
 
     private void checkb_publicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkb_publicosActionPerformed
@@ -286,7 +290,20 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                if(num >= 0 && num <= 25 ){
                    System.out.println(p1.probabilidad());
                    String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
-                   
+                   int tamano = (p1.getTamano()+p2.getTamano())/2;
+                   System.out.println(tamano);
+                   int peso = (p1.getPeso()+p2.getPeso())/2;
+                   System.out.println(peso);
+                   int posx = (p1.getX()+p2.getX())/2;
+                   System.out.println(posx);
+                   int posy = (p1.getY()+p2.getY())/2;
+                   System.out.println(posy);
+                   for (Cientifico cientifico : cientificos) {
+                       if(cientifico==c){
+                           cientifico.getpDescubiertos().add(new Terrestre(nombre, tamano, peso, posx, posy));
+                       }
+                   }
+                   guardarCientifico();
                    
                }
                else{
@@ -306,6 +323,12 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         }   
         
     }//GEN-LAST:event_bt_collisionarActionPerformed
+
+    private void cb_cientificosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_cientificosActionPerformed
+        // TODO add your handling code here:
+        actualizarArbolP();
+        
+    }//GEN-LAST:event_cb_cientificosActionPerformed
     public void actualizarCB(){
         DefaultComboBoxModel dc = (DefaultComboBoxModel) cb_cientificos.getModel();
         dc.removeAllElements();
@@ -315,14 +338,20 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         }
     }
     public void actualizarArbolP(){
-        Cientifico c = (Cientifico)cb_cientificos.getSelectedItem();
-        DefaultTreeModel modelo = (DefaultTreeModel)jt_planetas.getModel();
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
-        for (Planeta pDescubierto : c.getpDescubiertos()) {
-            DefaultMutableTreeNode hojap = new DefaultMutableTreeNode(pDescubierto);
-            root.add(hojap);
-        }
-        modelo.setRoot(root);
+        try{
+            Cientifico c = (Cientifico)cb_cientificos.getSelectedItem();
+            DefaultTreeModel modelo = (DefaultTreeModel)jt_planetas.getModel();
+            DefaultMutableTreeNode root = new DefaultMutableTreeNode("Planetas");
+            if(c.getpDescubiertos()!=null){
+                for (Planeta pDescubierto : c.getpDescubiertos()) {
+                    DefaultMutableTreeNode hojap = new DefaultMutableTreeNode(pDescubierto);
+                    root.add(hojap);
+                }
+                modelo.setRoot(root);
+            }    
+        } catch (Exception e){
+            
+        }    
        
     }
     public void actualizarArbolDefault(){

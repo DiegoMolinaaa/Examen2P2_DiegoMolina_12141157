@@ -67,13 +67,11 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="bt_crearCientifico" pref="155" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="tf_nomCientifico" max="32767" attributes="0"/>
-                                              <Component id="tf_nomP1" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="tf_nomP2" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jLabel1" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
-                                              <Component id="cb_cientificos" alignment="0" pref="155" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="tf_nomCientifico" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="tf_nomP1" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tf_nomP2" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel1" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
+                                          <Component id="cb_cientificos" alignment="0" pref="155" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       <Component id="bt_collisionar" max="32767" attributes="0"/>
@@ -173,6 +171,7 @@
     <Component class="javax.swing.JComboBox" name="cb_cientificos">
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cb_cientificosItemStateChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_cientificosActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
