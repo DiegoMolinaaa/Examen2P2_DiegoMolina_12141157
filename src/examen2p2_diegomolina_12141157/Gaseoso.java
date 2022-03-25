@@ -26,7 +26,7 @@ public class Gaseoso extends Planeta{
     }
 
     @Override
-    public int probalidiad() {
+    public int probabilidad() {
         int num = 0+r.nextInt(100);
         return num;
     }

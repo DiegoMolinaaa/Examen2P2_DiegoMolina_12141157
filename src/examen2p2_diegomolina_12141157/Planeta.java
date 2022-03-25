@@ -71,5 +71,5 @@ public abstract class Planeta {
     public String toString() {
         return nombre;
     }
-    public abstract int probalidiad();
+    public abstract int probabilidad();
 }

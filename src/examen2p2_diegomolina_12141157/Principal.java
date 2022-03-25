@@ -274,6 +274,18 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         pb_distancia.setMaximum((int)distancia);
         
         hilo.start();
+        if(p1 instanceof Terrestre){
+           if(p1.probabilidad() >= 0 && p1.probabilidad() <= 25 ){
+               System.out.println(p1.probabilidad());
+               JOptionPane.showMessageDialog(null, "Jejeje Siuuuuuu");
+           } 
+        }
+        else if(p1 instanceof Gaseoso){
+            if(p1.probabilidad() >= 0 && p1.probabilidad() <= 20){
+                System.out.println(p1.probabilidad());
+                JOptionPane.showMessageDialog(null, "Encara Messiiiii");
+            }
+        }
     }//GEN-LAST:event_bt_collisionarActionPerformed
     public void actualizarCB(){
         DefaultComboBoxModel dc = (DefaultComboBoxModel) cb_cientificos.getModel();
