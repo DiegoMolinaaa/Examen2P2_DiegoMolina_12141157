@@ -51,13 +51,16 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popup_addP = new javax.swing.JPopupMenu();
+        mi_planeta1 = new javax.swing.JMenuItem();
+        mi_planeta2 = new javax.swing.JMenuItem();
         jProgressBar1 = new javax.swing.JProgressBar();
         jProgressBar2 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_planetas = new javax.swing.JTree();
         checkb_publicos = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        tf_nomP1 = new javax.swing.JTextField();
+        tf_nomP2 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cb_cientificos = new javax.swing.JComboBox<>();
         bt_collisionar = new javax.swing.JButton();
@@ -65,10 +68,31 @@ public class Principal extends javax.swing.JFrame {
         tf_nomCientifico = new javax.swing.JTextField();
         bt_crearCientifico = new javax.swing.JButton();
 
+        mi_planeta1.setText("Planeta 1");
+        mi_planeta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_planeta1ActionPerformed(evt);
+            }
+        });
+        popup_addP.add(mi_planeta1);
+
+        mi_planeta2.setText("Planeta 2");
+        mi_planeta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_planeta2ActionPerformed(evt);
+            }
+        });
+        popup_addP.add(mi_planeta2);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Planetas");
         jt_planetas.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_planetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_planetasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jt_planetas);
 
         checkb_publicos.setText("Publicos");
@@ -120,8 +144,8 @@ public class Principal extends javax.swing.JFrame {
                                             .addComponent(bt_crearCientifico, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(tf_nomCientifico)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(tf_nomP1, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(tf_nomP2, javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(cb_cientificos, javax.swing.GroupLayout.Alignment.LEADING, 0, 155, Short.MAX_VALUE)))
                                         .addGap(26, 26, 26)
@@ -145,9 +169,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bt_collisionar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tf_nomP1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tf_nomP2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(13, 13, 13)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -191,6 +215,27 @@ public class Principal extends javax.swing.JFrame {
             actualizarArbolDefault();
         }
     }//GEN-LAST:event_checkb_publicosActionPerformed
+
+    private void jt_planetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_planetasMouseClicked
+        // TODO add your handling code here:
+        if(evt.isMetaDown()){
+            popup_addP.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jt_planetasMouseClicked
+
+    private void mi_planeta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_planeta1ActionPerformed
+        // TODO add your handling code here:
+        DefaultMutableTreeNode p1Hoja = (DefaultMutableTreeNode)jt_planetas.getLastSelectedPathComponent();
+        p1 = (Planeta)p1Hoja.getUserObject();
+        tf_nomP1.setText(p1.getNombre());
+    }//GEN-LAST:event_mi_planeta1ActionPerformed
+
+    private void mi_planeta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_planeta2ActionPerformed
+        // TODO add your handling code here:
+        DefaultMutableTreeNode p2Hoja = (DefaultMutableTreeNode)jt_planetas.getLastSelectedPathComponent();
+        p2 = (Planeta)p2Hoja.getUserObject();
+        tf_nomP2.setText(p2.getNombre());
+    }//GEN-LAST:event_mi_planeta2ActionPerformed
     public void actualizarCB(){
         DefaultComboBoxModel dc = (DefaultComboBoxModel) cb_cientificos.getModel();
         dc.removeAllElements();
@@ -290,12 +335,16 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTree jt_planetas;
+    private javax.swing.JMenuItem mi_planeta1;
+    private javax.swing.JMenuItem mi_planeta2;
+    private javax.swing.JPopupMenu popup_addP;
     private javax.swing.JTextField tf_nomCientifico;
+    private javax.swing.JTextField tf_nomP1;
+    private javax.swing.JTextField tf_nomP2;
     // End of variables declaration//GEN-END:variables
     ArrayList<Planeta> publicos = new ArrayList();
     ArrayList<Cientifico> cientificos = new ArrayList();
-           
+    Planeta p1;
+    Planeta p2;
 }
