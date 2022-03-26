@@ -50,6 +50,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     boolean vive = true;
     @Override
     public void run(){
+        tiempo = 0;
         pb_distancia.setValue(0);
         while(vive==true){
             if(!pausa){
@@ -295,9 +296,12 @@ public class Principal extends javax.swing.JFrame implements Runnable {
             if(p1 instanceof Terrestre){
                 int num = p1.probabilidad();
                 if(num >= 0 && num <= 25 ){
+                    tiempo = tiempo/1000;
+                    System.out.println(tiempo+"  segundos");
                    String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
                    try{
                         if(!(nombre.equals(""))){
+                            
                              int tamano = (p1.getTamano()+p2.getTamano())/2;
                              int peso = (p1.getPeso()+p2.getPeso())/2;
                              int posx = (p1.getX()+p2.getX())/2;
@@ -318,6 +322,8 @@ public class Principal extends javax.swing.JFrame implements Runnable {
             else if(p1 instanceof Gaseoso){
                 int num = p1.probabilidad();
                 if(num >= 0 && num <= 20){
+                    tiempo = tiempo/1000;
+                    System.out.println(tiempo+"  segundos");
                    String nombre = JOptionPane.showInputDialog("Ingrese el Nombre del Nuevo Planeta");
                    try{
                         if(!(nombre.equals(""))){
