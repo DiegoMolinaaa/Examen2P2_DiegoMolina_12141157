@@ -54,14 +54,14 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         while(vive==true){
             if(!pausa){
                 pb_distancia.setValue(pb_distancia.getValue()+1);
+                tiempo += pb_distancia.getValue();
                 if(pb_distancia.getValue() == pb_distancia.getMaximum()){
-                    JOptionPane.showMessageDialog(null, "Han Colisionado");
                     vive=false;
                     pb_distancia.setValue(0);
                 }
             }    
             try{
-                Thread.sleep(5);
+                Thread.sleep(5);   
             }catch(Exception ex){
                 System.out.println(ex);
             }
@@ -88,7 +88,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         tf_nomP2 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cb_cientificos = new javax.swing.JComboBox<>();
-        bt_collisionar = new javax.swing.JButton();
+        bt_colisionar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         tf_nomCientifico = new javax.swing.JTextField();
         bt_crearCientifico = new javax.swing.JButton();
@@ -135,10 +135,10 @@ public class Principal extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        bt_collisionar.setText("Collisionar");
-        bt_collisionar.addActionListener(new java.awt.event.ActionListener() {
+        bt_colisionar.setText("Colisionar");
+        bt_colisionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_collisionarActionPerformed(evt);
+                bt_colisionarActionPerformed(evt);
             }
         });
 
@@ -178,7 +178,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(cb_cientificos, 0, 155, Short.MAX_VALUE))
                                         .addGap(26, 26, 26)
-                                        .addComponent(bt_collisionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                        .addComponent(bt_colisionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(checkb_publicos, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -196,7 +196,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bt_collisionar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bt_colisionar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(tf_nomP1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -278,9 +278,10 @@ public class Principal extends javax.swing.JFrame implements Runnable {
         
     }//GEN-LAST:event_mi_planeta2ActionPerformed
 
-    private void bt_collisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_collisionarActionPerformed
+    private void bt_colisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_colisionarActionPerformed
         // TODO add your handling code here:
         Cientifico c = (Cientifico)cb_cientificos.getSelectedItem();
+        
         double x = Math.pow((p2.getX()-p1.getX()), 2);
         double y = Math.pow((p2.getY()-p1.getY()), 2);
         double distancia = Math.sqrt(x+y);
@@ -288,13 +289,9 @@ public class Principal extends javax.swing.JFrame implements Runnable {
             pb_distancia.setForeground(Color.green);
             pb_distancia.setMaximum((int)distancia);
             pb_distancia.setValue(0);
+            vive=true;
             hilo = new Thread(this);
             hilo.start();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Favor Seleccionar Dos Planetas Diferentes");
-        }
-        if(vive==false){
             if(p1 instanceof Terrestre){
                 int num = p1.probabilidad();
                 if(num >= 0 && num <= 25 ){
@@ -314,7 +311,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                              actualizarArbolP();
                         } 
                    } catch (Exception e){
-                       
+
                    }    
                }
             }
@@ -337,14 +334,17 @@ public class Principal extends javax.swing.JFrame implements Runnable {
                              actualizarArbolP();
                         } 
                    } catch (Exception e){
-                       
+
                    }    
                 }
             }
-            
-        }   
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Favor Seleccionar Dos Planetas Diferentes");
+        }
         
-    }//GEN-LAST:event_bt_collisionarActionPerformed
+        
+    }//GEN-LAST:event_bt_colisionarActionPerformed
 
     private void cb_cientificosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_cientificosActionPerformed
         // TODO add your handling code here:
@@ -447,7 +447,7 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bt_collisionar;
+    private javax.swing.JButton bt_colisionar;
     private javax.swing.JButton bt_crearCientifico;
     private javax.swing.JComboBox<String> cb_cientificos;
     private javax.swing.JCheckBox checkb_publicos;
@@ -468,4 +468,5 @@ public class Principal extends javax.swing.JFrame implements Runnable {
     ArrayList<Cientifico> cientificos = new ArrayList();
     Planeta p1;
     Planeta p2;
+    double tiempo = 0;
 }

@@ -74,7 +74,7 @@
                                           <Component id="cb_cientificos" alignment="0" pref="155" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                      <Component id="bt_collisionar" max="32767" attributes="0"/>
+                                      <Component id="bt_colisionar" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -101,7 +101,7 @@
                   <Component id="jScrollPane1" min="-2" pref="236" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="bt_collisionar" min="-2" pref="75" max="-2" attributes="0"/>
+                          <Component id="bt_colisionar" min="-2" pref="75" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="tf_nomP1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -176,12 +176,12 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="bt_collisionar">
+    <Component class="javax.swing.JButton" name="bt_colisionar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Collisionar"/>
+        <Property name="text" type="java.lang.String" value="Colisionar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_collisionarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_colisionarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
